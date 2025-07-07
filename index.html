@@ -11,6 +11,163 @@
             box-sizing: border-box;
         }
 
+        /* Clinical Panel Styles */
+        .main-chat {
+            display: flex;
+            flex-direction: column;
+            min-height: 600px;
+        }
+
+        .clinical-panel {
+            background: linear-gradient(180deg, #f8f9ff 0%, #ffffff 100%);
+            border-left: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .clinical-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .clinical-header h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1em;
+        }
+
+        .clinical-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.85em;
+        }
+
+        .clinical-content {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .metric-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            font-size: 0.95em;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .metric-bar {
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .metric-fill.anxiety {
+            background: linear-gradient(90deg, #4CAF50, #FFC107, #FF5722);
+        }
+
+        .metric-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .pattern-tag, .theme-tag {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            padding: 4px 8px;
+            font-size: 0.75em;
+            color: #667eea;
+        }
+
+        .theme-tag {
+            background: rgba(118, 75, 162, 0.1);
+            border-color: rgba(118, 75, 162, 0.2);
+            color: #764ba2;
+        }
+
+        .resource-list {
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .resource-item {
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .progression-indicator {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .progress-step {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            background: #f9f9f9;
+            color: #666;
+        }
+
+        .progress-step.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .recommendations {
+            margin-top: 10px;
+        }
+
+        .recommendation-item {
+            font-size: 0.85em;
+            color: #333;
+            margin-bottom: 5px;
+            padding: 5px 0;
+            border-bottom: 1px dotted #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                max-width: 100%;
+                margin: 10px;
+                min-height: calc(100vh - 20px);
+            }
+            
+            .clinical-panel {
+                display: none; /* Masquer sur mobile */
+            }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -27,10 +184,11 @@
             border-radius: 24px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 800px;
+            max-width: 1200px;
             min-height: 600px;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 0;
             overflow: hidden;
             animation: slideIn 0.8s ease-out;
         }
@@ -553,16 +711,17 @@
 </head>
 <body>
     <div class="app-container">
-        <div class="header">
-            <h1>🌸 Zen Assistant</h1>
-            <p class="subtitle">Votre compagnon bienveillant pour le bien-être mental</p>
-            <div class="privacy-badge">
-                <div class="privacy-icon"></div>
-                <span>100% Local & Privé</span>
+        <div class="main-chat">
+            <div class="header">
+                <h1>🌸 Zen Assistant</h1>
+                <p class="subtitle">Votre compagnon bienveillant pour le bien-être mental</p>
+                <div class="privacy-badge">
+                    <div class="privacy-icon"></div>
+                    <span>100% Local & Privé</span>
+                </div>
             </div>
-        </div>
 
-        <div class="chat-container">
+            <div class="chat-container">
             <div class="welcome-message">
                 <h2>Bienvenue dans votre espace de bien-être 🌱</h2>
                 <p>Je suis ici pour vous accompagner avec bienveillance. Nos conversations restent entièrement privées sur votre appareil.</p>
@@ -649,6 +808,67 @@
                 </button>
             </div>
         </div>
+
+        <!-- Panneau d'évaluation clinique -->
+        <div class="clinical-panel">
+            <div class="clinical-header">
+                <h3>📊 Évaluation Clinique</h3>
+                <p>Analyse en temps réel</p>
+            </div>
+            
+            <div class="clinical-content">
+                <div class="metric-card">
+                    <h4>🎭 État émotionnel</h4>
+                    <div class="metric-value" id="emotionalState">Non évalué</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" id="emotionalBar"></div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h4>😰 Niveau d'anxiété</h4>
+                    <div class="metric-value" id="anxietyLevel">Non évalué</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill anxiety" id="anxietyBar"></div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h4>💭 Schémas cognitifs</h4>
+                    <div class="metric-tags" id="cognitivePatterns">
+                        <span class="pattern-tag">En analyse...</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h4>🎯 Thématiques principales</h4>
+                    <div class="metric-tags" id="mainThemes">
+                        <span class="theme-tag">En cours...</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h4>💪 Ressources identifiées</h4>
+                    <div class="resource-list" id="identifiedResources">
+                        <div class="resource-item">• Analyse en cours...</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <h4>📈 Progression</h4>
+                    <div class="progression-indicator">
+                        <div class="progress-step active">Accueil</div>
+                        <div class="progress-step" id="explorationStep">Exploration</div>
+                        <div class="progress-step" id="interventionStep">Intervention</div>
+                    </div>
+                </div>
+
+                <div class="recommendations" id="clinicalRecommendations">
+                    <h4>💡 Recommandations</h4>
+                    <div class="recommendation-item">• Établir le rapport thérapeutique</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -670,18 +890,24 @@ PRINCIPES D'ACCOMPAGNEMENT :
 
 STRUCTURE D'INTERVENTION OBLIGATOIRE :
 1. ACCUEIL EMPATHIQUE : "Je perçois que..." / "Il semble que..."
-2. EXPLORATION ACTIVE : Toujours poser 2-3 questions d'approfondissement
-3. NORMALISATION : "C'est une réaction tout à fait compréhensible..."
-4. OUTIL/TECHNIQUE : Propose une technique adaptée quand approprié
-5. OUVERTURE : Termine toujours par une question ouverte qui permet de continuer l'exploration
+2. APPORT CONCRET : Donner une perspective, normaliser, expliquer le processus psychologique
+3. TECHNIQUE/OUTIL : Proposer quelque chose d'actionnable quand approprié
+4. EXPLORATION MESURÉE : Maximum 1 question ouverte pour approfondir
 
-RÈGLES D'EXPLORATION APPROFONDIE :
-- Ne jamais donner une réponse "fermée" qui bloque la conversation
-- Toujours creuser davantage : "Qu'est-ce qui vous fait penser que..." 
-- Explorer les pensées automatiques : "Quelles pensées vous traversent l'esprit quand..."
-- Chercher les preuves : "Sur quoi vous basez-vous pour dire que..."
-- Identifier les émotions : "Comment cela se manifeste-t-il dans votre corps ?"
-- Explorer les ressources : "Comment avez-vous géré des défis similaires avant ?"
+RÈGLE D'ÉQUILIBRE : 
+- 70% d'apports concrets (validation, psychoéducation, techniques, perspectives)
+- 30% d'exploration (maximum 1 question par réponse)
+- Alterner entre "donner" et "explorer"
+
+APPORTS CONCRETS À PRIVILÉGIER :
+- Normalisation : "Cette réaction est normale car..."
+- Psychoéducation : "Votre cerveau réagit ainsi parce que..."
+- Perspective : "Une autre façon de voir cette situation..."
+- Technique immédiate : "Voici quelque chose que vous pouvez essayer..."
+- Ressources : "Dans ce type de situation, ce qui aide souvent c'est..."
+
+EXEMPLE DE BONNE RÉPONSE :
+"Je comprends votre inquiétude face à cette incertitude professionnelle. Cette anxiété est normale : votre cerveau interprète l'incertitude comme un danger et active votre système d'alarme. Ce qui peut vous aider maintenant, c'est de distinguer ce que vous contrôlez (votre performance, votre réseau, vos compétences) de ce que vous ne contrôlez pas (les décisions de l'entreprise). Une technique immédiate : listez 3 actions concrètes que vous pourriez entreprendre pour renforcer votre position. Qu'est-ce qui vous semble le plus réalisable dans cette liste ?"
 
 QUESTIONS D'APPROFONDISSEMENT PAR THÈME :
 
@@ -983,6 +1209,130 @@ Répondez en français de manière empathique et bienveillante.`;
             
             // Store in conversation history
             conversationHistory.push({role: sender === 'user' ? 'user' : 'assistant', content});
+            
+            // Analyser le contenu pour l'évaluation clinique
+            if (sender === 'user') {
+                analyzeClinicalContent(content);
+            }
+        }
+
+        function analyzeClinicalContent(userMessage) {
+            // Analyse des émotions
+            const emotionKeywords = {
+                anxieux: 'Anxiété modérée',
+                peur: 'Anxiété élevée', 
+                inquiet: 'Anxiété légère',
+                stressé: 'Stress',
+                déprimé: 'Humeur dépressive',
+                triste: 'Tristesse',
+                en_colère: 'Colère',
+                fatigué: 'Fatigue'
+            };
+
+            const cognitivePatterns = {
+                'ne sais pas': 'Incertitude',
+                'va mal': 'Catastrophisme', 
+                'toujours': 'Généralisation',
+                'jamais': 'Pensée dichotomique',
+                'impossible': 'Impuissance apprise'
+            };
+
+            const themes = {
+                'travail': 'Professionnel',
+                'business': 'Professionnel',
+                'employeur': 'Professionnel',
+                'famille': 'Familial',
+                'relation': 'Relationnel',
+                'santé': 'Santé'
+            };
+
+            // Mise à jour de l'interface clinique
+            updateClinicalPanel(userMessage, emotionKeywords, cognitivePatterns, themes);
+        }
+
+        function updateClinicalPanel(message, emotions, patterns, themes) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Analyse émotionnelle
+            let detectedEmotion = 'Neutre';
+            let anxietyLevel = 0;
+            
+            Object.keys(emotions).forEach(keyword => {
+                if (lowerMessage.includes(keyword)) {
+                    detectedEmotion = emotions[keyword];
+                    if (keyword.includes('peur') || keyword.includes('anxieux')) {
+                        anxietyLevel = Math.min(anxietyLevel + 30, 100);
+                    }
+                }
+            });
+            
+            document.getElementById('emotionalState').textContent = detectedEmotion;
+            document.getElementById('anxietyLevel').textContent = anxietyLevel > 0 ? `${anxietyLevel}%` : 'Faible';
+            document.getElementById('anxietyBar').style.width = `${anxietyLevel}%`;
+            
+            // Schémas cognitifs
+            const detectedPatterns = [];
+            Object.keys(patterns).forEach(pattern => {
+                if (lowerMessage.includes(pattern)) {
+                    detectedPatterns.push(patterns[pattern]);
+                }
+            });
+            
+            if (detectedPatterns.length > 0) {
+                document.getElementById('cognitivePatterns').innerHTML = 
+                    detectedPatterns.map(p => `<span class="pattern-tag">${p}</span>`).join('');
+            }
+            
+            // Thématiques
+            const detectedThemes = [];
+            Object.keys(themes).forEach(theme => {
+                if (lowerMessage.includes(theme)) {
+                    detectedThemes.push(themes[theme]);
+                }
+            });
+            
+            if (detectedThemes.length > 0) {
+                document.getElementById('mainThemes').innerHTML = 
+                    detectedThemes.map(t => `<span class="theme-tag">${t}</span>`).join('');
+            }
+            
+            // Progression
+            const messageCount = conversationHistory.filter(m => m.role === 'user').length;
+            if (messageCount > 1) {
+                document.getElementById('explorationStep').classList.add('active');
+            }
+            if (messageCount > 3) {
+                document.getElementById('interventionStep').classList.add('active');
+            }
+            
+            // Recommandations
+            updateClinicalRecommendations(detectedEmotion, anxietyLevel, detectedPatterns);
+        }
+
+        function updateClinicalRecommendations(emotion, anxietyLevel, patterns) {
+            const recommendations = [];
+            
+            if (anxietyLevel > 50) {
+                recommendations.push('• Techniques de régulation anxieuse recommandées');
+                recommendations.push('• Exercices de respiration prioritaires');
+            }
+            
+            if (patterns.includes('Catastrophisme')) {
+                recommendations.push('• Restructuration cognitive nécessaire');
+            }
+            
+            if (patterns.includes('Incertitude')) {
+                recommendations.push('• Explorer les ressources et options');
+            }
+            
+            if (recommendations.length === 0) {
+                recommendations.push('• Continuer l\'exploration empathique');
+            }
+            
+            document.getElementById('clinicalRecommendations').innerHTML = `
+                <h4>💡 Recommandations</h4>
+                ${recommendations.map(r => `<div class="recommendation-item">${r}</div>`).join('')}
+            `;
         }
 
         function showTypingIndicator() {
