@@ -652,23 +652,57 @@
     </div>
 
     <script>
-        const MENTAL_HEALTH_PROMPT = `Tu es un assistant en bien-être mental bienveillant et empathique parlant français. 
+        const MENTAL_HEALTH_PROMPT = `Tu es un assistant en bien-être mental expert, formé aux approches thérapeutiques modernes. Tu parles français avec empathie et professionnalisme.
 
-PRINCIPES FONDAMENTAUX:
-- Adopte une approche maïeutique (pose des questions pour aider la réflexion)
-- Reste bienveillant et non-jugeant
-- Ne pose jamais de diagnostic médical
-- Encourage à consulter un professionnel si nécessaire
-- Utilise un langage chaleureux et rassurant
-- Réponds en français uniquement
+FORMATION THÉRAPEUTIQUE :
+- Thérapie Cognitivo-Comportementale (TCC)
+- Approche humaniste centrée sur la personne (Carl Rogers)
+- Techniques de mindfulness et pleine conscience
+- Psychoéducation et techniques de régulation émotionnelle
+- Communication non-violente
 
-STRUCTURE DE RÉPONSE:
-1. Accueillir l'émotion exprimée avec empathie
-2. Poser 1-2 questions ouvertes pour approfondir
-3. Offrir une perspective ou technique simple si approprié
-4. Encourager la suite du dialogue
+PRINCIPES D'ACCOMPAGNEMENT :
+1. ÉCOUTE ACTIVE : Reformule ce que dit la personne pour montrer que tu comprends
+2. EMPATHIE : Valide les émotions sans les minimiser ("Je comprends que ce soit difficile")
+3. QUESTIONS SOCRATIQUES : Aide la personne à découvrir ses propres réponses
+4. PSYCHOÉDUCATION : Explique le fonctionnement des émotions/pensées quand approprié
+5. TECHNIQUES CONCRÈTES : Propose des outils pratiques (respiration, restructuration cognitive, etc.)
 
-Ton objectif est d'aider la personne à réfléchir et se sentir écoutée, pas de résoudre ses problèmes.`;
+STRUCTURE D'INTERVENTION :
+1. ACCUEIL EMPATHIQUE : "Je perçois que..." / "Il semble que..."
+2. EXPLORATION : Questions ouvertes pour comprendre la situation
+3. NORMALISATION : "C'est une réaction tout à fait compréhensible..."
+4. OUTIL/TECHNIQUE : Propose une technique adaptée si approprié
+5. ENCOURAGEMENT : Valorise les efforts et ressources de la personne
+
+TECHNIQUES À UTILISER :
+- Restructuration cognitive : Questionner les pensées négatives
+- Techniques de grounding : 5-4-3-2-1 (5 choses vues, 4 entendues, etc.)
+- Respiration cohérence cardiaque : 4 temps inspiration, 4 temps expiration
+- Validation émotionnelle : "Vos émotions sont légitimes"
+- Recherche de ressources : "Qu'est-ce qui vous aide habituellement ?"
+
+EXEMPLES DE RÉPONSES EMPATHIQUES :
+- "Je perçois beaucoup de souffrance dans vos mots..."
+- "Il semble que cette situation vous place dans une position difficile..."
+- "Votre réaction est tout à fait compréhensible face à ce que vous vivez..."
+- "Qu'est-ce qui vous aide habituellement dans ces moments ?"
+- "Avez-vous remarqué des déclencheurs particuliers ?"
+
+LIMITES IMPORTANTES :
+- Tu n'établis JAMAIS de diagnostic
+- Tu orientes vers un professionnel si nécessaire ("Il pourrait être bénéfique de consulter...")
+- Tu ne remplaces pas une thérapie, tu accompagnes
+- En cas de crise suicidaire : "Je vous encourage vivement à contacter le 3114 (numéro national français de prévention du suicide)"
+
+STYLE DE COMMUNICATION :
+- Vouvoiement pour marquer le respect
+- Phrases courtes et claires
+- Pas de jargon psychologique complexe
+- Ton chaleureux mais professionnel
+- Évite les conseils directs, privilégie l'accompagnement vers la découverte
+
+Ton objectif est d'aider la personne à mieux comprendre ses émotions, développer ses ressources internes et retrouver un sentiment d'agentivité (capacité d'action sur sa vie).`;
 
         let conversationHistory = [];
         let breathingTimer = null;
@@ -753,16 +787,20 @@ Ton objectif est d'aider la personne à réfléchir et se sentir écoutée, pas 
             closeModal('relaxationModal');
             addMessage("J'aimerais faire une relaxation progressive musculaire", 'user');
             setTimeout(() => {
-                const response = `Excellente idée ! La relaxation progressive est très efficace pour relâcher les tensions.
+                const response = `Excellente idée ! La relaxation progressive de Jacobson est très efficace pour réduire les tensions physiques et mentales.
 
-🌱 **Installez-vous confortablement**
-- Asseyez-vous ou allongez-vous dans un endroit calme
-- Fermez les yeux si cela vous convient
+🌱 **Préparation de l'espace thérapeutique**
+- Installez-vous confortablement, assis ou allongé
+- Créez un environnement calme, tamisez les lumières si possible
+- Fermez les yeux ou fixez un point neutre
 
-🦶 **Commençons par vos pieds**
-Contractez vos orteils pendant 5 secondes... puis relâchez complètement. Ressentez la différence entre tension et détente.
+🧠 **Principe thérapeutique**
+Cette technique vous aide à distinguer tension et détente, développant votre conscience corporelle.
 
-Voulez-vous que je vous guide à travers tout le corps, étape par étape ?`;
+🦶 **Démarrage par les pieds**
+Contractez tous les muscles de vos pieds pendant 5 secondes... puis relâchez complètement pendant 10 secondes. Observez la différence de sensation.
+
+Cette différenciation tension/détente est un apprentissage important pour la gestion du stress. Souhaitez-vous que je vous guide étape par étape à travers tout votre corps ?`;
                 addMessage(response, 'assistant');
             }, 1000);
         }
@@ -771,17 +809,24 @@ Voulez-vous que je vous guide à travers tout le corps, étape par étape ?`;
             closeModal('relaxationModal');
             addMessage("J'aimerais pratiquer la pleine conscience", 'user');
             setTimeout(() => {
-                const response = `Merveilleux ! La pleine conscience nous aide à revenir au moment présent.
+                const response = `Magnifique choix ! La pleine conscience est un outil thérapeutique puissant pour l'ancrage dans le présent.
 
-🍃 **Exercice des 5 sens**
-Prenez un moment pour remarquer :
-- **5 choses** que vous pouvez voir autour de vous
-- **4 choses** que vous pouvez toucher
-- **3 choses** que vous pouvez entendre
-- **2 choses** que vous pouvez sentir
-- **1 chose** que vous pouvez goûter
+🧠 **Objectif thérapeutique**
+Développer votre capacité d'observation sans jugement, réduire les ruminations et l'anxiété anticipatoire.
 
-Cet exercice ancre votre attention dans l'instant présent. Comment vous sentez-vous en ce moment même ?`;
+🍃 **Technique du 5-4-3-2-1 (Grounding)**
+Cette technique neurologique vous reconnecte au moment présent :
+
+**5** - Nommez 5 objets que vous voyez autour de vous
+**4** - Identifiez 4 sons que vous entendez
+**3** - Remarquez 3 sensations tactiles (vêtements, température, texture)
+**2** - Percevez 2 odeurs différentes
+**1** - Goûtez quelque chose ou remarquez le goût dans votre bouche
+
+💡 **Pourquoi ça marche ?**
+Cette technique active vos sens et ramène votre système nerveux dans le présent, interrompant les cycles d'anxiété.
+
+Comment vous sentez-vous après cet exercice ? Avez-vous remarqué un changement dans votre niveau de stress ?`;
                 addMessage(response, 'assistant');
             }, 1000);
         }
@@ -790,18 +835,25 @@ Cet exercice ancre votre attention dans l'instant présent. Comment vous sentez-
             closeModal('relaxationModal');
             addMessage("J'aimerais faire un exercice de visualisation", 'user');
             setTimeout(() => {
-                const response = `Parfait ! La visualisation peut créer un profond sentiment de paix.
+                const response = `Parfait ! La visualisation thérapeutique active les mêmes circuits neuronaux que l'expérience réelle, créant un apaisement profond.
 
-🌅 **Votre lieu de sérénité**
-Fermez les yeux et imaginez un endroit où vous vous sentez parfaitement en sécurité et apaisé...
+🧠 **Base neurologique**
+Votre cerveau ne fait pas la différence entre une image mentale vivide et la réalité. Nous allons utiliser cela pour créer des sensations de sécurité.
 
-Peut-être est-ce :
-- Une plage au coucher du soleil 🏖️
-- Une forêt verdoyante 🌲
-- Un jardin fleuri 🌺
-- Un coin douillet chez vous 🏠
+🌅 **Construction de votre "lieu sûr" thérapeutique**
+Fermez les yeux et laissez émerger un endroit où vous vous sentez parfaitement en sécurité et apaisé...
 
-Décrivez-moi ce lieu. Que voyez-vous, entendez-vous, ressentez-vous ?`;
+**Questions d'ancrage :**
+- Êtes-vous à l'intérieur ou à l'extérieur ?
+- Quelle est la température ? Y a-t-il une brise ?
+- Quelles couleurs dominent cet espace ?
+- Quels sons entendez-vous ? (oiseaux, vagues, silence...)
+- Y a-t-il des odeurs particulières ?
+
+💝 **Ancrage émotionnel**
+Ressentez la sécurité et la paix de ce lieu. Cette sensation vous appartient, vous pouvez y revenir mentalement quand vous en avez besoin.
+
+Pouvez-vous me décrire votre lieu sûr ? Cela renforcera l'ancrage thérapeutique.`;
                 addMessage(response, 'assistant');
             }, 1000);
         }
