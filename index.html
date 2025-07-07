@@ -839,7 +839,7 @@ Décrivez-moi ce lieu. Que voyez-vous, entendez-vous, ressentez-vous ?`;
         }
 
         async function callLocalLLM(userMessage) {
-            // REMPLACEZ cette URL par votre vraie URL RunPod
+            // Retour direct avec headers CORS
             const RUNPOD_URL = 'https://usizvecpl32e6v-11434.proxy.runpod.net';
             const MODEL_NAME = 'gemma2:9b';
             
@@ -856,8 +856,11 @@ Répondez en français de manière empathique et bienveillante.`;
                 const response = await fetch(`${RUNPOD_URL}/api/generate`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Origin': 'https://glistening-sunburst-3e7f48.netlify.app',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
+                    mode: 'cors',
                     body: JSON.stringify({
                         model: MODEL_NAME,
                         prompt: fullPrompt,
