@@ -849,3 +849,98 @@ Historique de conversation:
 ${conversationHistory.slice(-6).map(msg => `${msg.role}: ${msg.content}`).join('\n')}
 
 Utilisateur: ${userMessage}
+
+Répondez en français de manière empathique et bienveillante.`;
+
+            try {
+                const response = await fetch(`${RUNPOD_URL}/api/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: MODEL_NAME,
+                        prompt: fullPrompt,
+                        stream: false,
+                        options: {
+                            temperature: 0.7,
+                            top_p: 0.9,
+                            max_tokens: 300
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.response || "Je n'ai pas pu générer une réponse appropriée.";
+                
+            } catch (error) {
+                console.error('Erreur API:', error);
+                return generateFallbackResponse(userMessage);
+            }
+        }
+
+        function generateFallbackResponse(userMessage) {
+            const fallbackResponses = [
+                "Je vous remercie de partager cela avec moi. Même si je rencontre quelques difficultés techniques, vos sentiments sont importants. Pouvez-vous me dire ce qui vous préoccupe le plus en ce moment ?",
+                "J'aimerais pouvoir vous répondre plus personnellement, mais j'ai des soucis de connexion. Ce que vous ressentez est valide. Y a-t-il quelque chose de spécifique qui vous tracasse aujourd'hui ?",
+                "Malgré mes difficultés techniques actuelles, je veux que vous sachiez que je suis là pour vous écouter. Voulez-vous me parler de ce qui vous amène ici aujourd'hui ?"
+            ];
+            return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+        }
+
+        function addMessage(content, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = content;
+            
+            messageDiv.appendChild(messageContent);
+            messagesContainer.appendChild(messageDiv);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Store in conversation history
+            conversationHistory.push({role: sender === 'user' ? 'user' : 'assistant', content});
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'block';
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const breathingModal = document.getElementById('breathingModal');
+            const relaxationModal = document.getElementById('relaxationModal');
+            if (event.target == breathingModal) {
+                closeModal('breathingModal');
+            }
+            if (event.target == relaxationModal) {
+                closeModal('relaxationModal');
+            }
+        }
+
+        // Auto-resize textarea
+        document.getElementById('messageInput').addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Focus input on load
+        window.addEventListener('load', () => {
+            document.getElementById('messageInput').focus();
+        });
+    </script>
+</body>
+</html>
